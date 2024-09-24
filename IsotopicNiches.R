@@ -18,7 +18,7 @@ library(plotrix) # Contains the ablineclip function
 # Functions
 ################################################################################
 
-# The first function is groupMetricsML. This function is a modification of the 
+# The first function is groupMetricsML2. This function is a modification of the 
 # GroupMetricMl function in SIBER. It provides most of the standard ellipse metrics
 # (Standard Ellipse Area SEA and its corresponding small sample size corrected 
 # version SEAc, eccentricity, angle in radians), but also Pseudo-standard deviation 
