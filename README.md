@@ -24,7 +24,7 @@ EnvironmentalData.csv provides environmental data for each station where sea sta
 - Latitude: latitude of the sampling
 - Longitude: longitude of the sampling
 - seaice_prev_month: sea ice concentration during the month preceding the sampling
-- days_since_melt: numbers of days between sea ice melting and the sampling. Values equal to 32765 corresponds to areas that were never recorded to be covered by sea ice.
+- days_since_melt: number of days between sea ice melting and the sampling. Values equal to 32765 corresponds to areas that were never recorded to be covered by sea ice.
 - seaice_last_730: number of days during which sea ice concentration was higher than 85 % over a period of 730 days preceding the sampling
 - chl_prev_month: surface chlorophyll concentration from the month preceding the sampling
 
