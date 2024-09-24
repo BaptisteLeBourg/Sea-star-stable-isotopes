@@ -1,6 +1,6 @@
 # Sea-star-stable-isotopes
 
-This repository provides the script used in the paper for "How do environmental conditions affect sea star trophic ecology? A circum-Antarctic assessment" by Le Bourg et al. (2024).
+This repository provides the scripts used in the paper for "How do environmental conditions affect sea star trophic ecology? A circum-Antarctic assessment" by Le Bourg et al. (2024).
 
 It contains two tables: 
 
