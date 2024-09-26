@@ -1,5 +1,5 @@
 # This script focuses on the investigation of the isotopic niches of sea stars in 
-# the Southern ocean, depending of the trophic groups and of the environmental 
+# the Southern Ocean, depending of the trophic groups and of the environmental 
 # variables.
 
 ################################################################################
