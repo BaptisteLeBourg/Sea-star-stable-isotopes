@@ -1,6 +1,6 @@
 # This script focuses on the investigation of the impacts of the interactions 
 # between environmental impacts on the stable isotope values of sea stars in the 
-# Southern ocean.
+# Southern Ocean.
 
 ################################################################################
 # Packages
