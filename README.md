@@ -15,7 +15,7 @@ IsotopeData.csv provides stable isotope data in sea stars from the Southern Ocea
 - Depth: depth at which the sea star was collected
 - d13C: stable isotope value for carbon
 - d15N: stable isotope value for nitrogen
-- Trophic_group: trophic group of the collected sea star (?: unknown trophic group, Carnivore1: predator of active prey, Deposit-feeder: sediment feeder, Omnivore: omnivore, Pelagic-Carnivore1: predator of sessile prey, Pelagic-Carnivore2: predator of encrusting prey, Pelagic-Omnivore: pelagos-base omnivore, Pelagic-Suspension-feeder: suspension feeder)
+- Trophic_group: trophic group of the collected sea star (?: unknown trophic group, Carnivore1: predator of active prey, Deposit-feeder: sediment feeder, Omnivore: omnivore, Pelagic-Carnivore1: predator of sessile prey, Pelagic-Carnivore2: predator of encrusting prey, Pelagic-Omnivore: pelagos-based omnivore, Pelagic-Suspension-feeder: suspension feeder)
 
 EnvironmentalData.csv provides environmental data for each station where sea stars were sampled. The columns are:
 - ExpeditionID: name of the sampling expedition
