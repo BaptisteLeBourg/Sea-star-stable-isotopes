@@ -1,6 +1,6 @@
 # This script focuses on the investigation of the impacts of the the trophic group,
 # the environmental variables and their interactions on the stable isotope values 
-# of sea stars in the Southern ocean with linear models and ANCOVAs.
+# of sea stars in the Southern Ocean with linear models and ANCOVAs.
 
 ################################################################################
 # Packages
