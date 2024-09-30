@@ -141,7 +141,7 @@ Data$Trophic_group<-as.factor(Data$Trophic_group)
 # For plots displaying relationship of stable isotope values with sea ice 
 # concentration and sea ice duration, we need a dataframe where individuals from
 # Subantarctic regions are removed. These individuals were collected in areas 
-# where sea ice has not been present since more than 1000 days.
+# where sea ice has not been present since more than 1000 days or at all (value = 32765).
 DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 
 ################################################################################
@@ -150,7 +150,7 @@ DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 # The ellipses will be generated at the scale of the whole Southern Ocean. Yet,
 # stable isotope values in sea stars may differ between sampling stations because
 # of spatial variations of stable isotope values of the primary food sources at 
-# the baseline of the food webs, or of the potential influence of other 
+# the baseline of the food webs, or because of the potential influence of other 
 # environmental parameters than the one of interest on stable isotope values. 
 # To avoid this issue, we mean-corrected stable isotope values for each station.
 
@@ -236,7 +236,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipse in a matrix.
+# Comparison of PSDx for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -273,7 +273,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipse in a matrix.
+# Comparison of PSDy for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -533,7 +533,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipse in a matrix.
+# Comparison of PSDx for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -570,7 +570,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipse in a matrix.
+# Comparison of PSDy for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -593,8 +593,8 @@ groupsPSDy
 # Summary of the results.
 
 # Preparation of data for the plots and a table summarising the results of PSDx 
-# and PSDy estimation. We need to reorder the chlorophyll concentration 
-# intervals in the order we want to see them on the table and the plots.
+# and PSDy estimation. We need to reorder the depth intervals in the order we
+# want to see them on the table and the plots.
 PSDxbathome<-PSDx.B
 QPSDxbathome<-PSDx.B.credibles
 modePSDxbathome<-as.data.frame(groupsPSDx)
@@ -827,7 +827,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipse in a matrix.
+# Comparison of PSDx for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -864,7 +864,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipse in a matrix.
+# Comparison of PSDy for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -947,7 +947,7 @@ box(lwd=2)
 cor.test(DataAnt$logIce,DataAnt$d13C)
 legend("topright", c(expression(bold("r = 0.082, P < 0.001")),""),cex=2.75, bty="n",xjust=1) 
 
-##### Since we want to show the relationship between δ15N values and sea ice 
+##### Since we want to show the relationship between δ13C values and sea ice 
 ##### concentration with a scale of raw sea ice concentration values instead of 
 ##### logit-transformed ones, we need to predict the relationship between δ13C 
 ##### values and sea ice concentration.
@@ -978,7 +978,7 @@ legend("topright", c(expression(bold("r = 0.133, P < 0.001")),""),cex=2.75, bty=
 
 ##### Since we want to show the relationship between δ15N values and sea ice 
 ##### concentration with a scale of raw sea ice concentration values instead of 
-##### logit-transformed ones, we need to predict the relationship between δ13C 
+##### logit-transformed ones, we need to predict the relationship between δ15N 
 ##### values and sea ice concentration.
 test.glm <- lm(d15N ~ logit(seaice_prev_month),data=DataAnt)
 x_test <- seq(from=0,to=max(DataAnt$seaice_prev_month),length.out=1000)
@@ -1090,8 +1090,7 @@ meand15N<-aggregate(iso2~group+community, data=nicheSIBER, FUN="mean")
 nicheSIBER<-left_join(meand13C,meand15N)
 
 # We can now considered all taxa as a single species to ensure that the standard
-# ellipses will be generated at the scale of the sea ice concentration intervals
-# only.
+# ellipses will be generated at the scale of the sea ice duration intervals only.
 nicheSIBER$group<-rep("AllSpecies",nrow(nicheSIBER))
 
 # Re-ordering of the columns in the right order and creation of the SIBER object.
@@ -1139,7 +1138,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipse in a matrix.
+# Comparison of PSDx for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -1176,7 +1175,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipse in a matrix.
+# Comparison of PSDy for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -1217,7 +1216,6 @@ modePSDyIceDur<-modePSDyIceDur[c(13,1,10,2:9,11,12),]
 
 groupMLIceDur<-group.ML[,c(13,1:12)]
 
-####### Table and figure ######
 # Creation of a table summarising the results of PSDx and PSDy estimation.
 tableIceDur<-data.frame(matrix(nrow=nrow(modePSDyIceDur), ncol=3))
 colnames(tableIceDur)<-c("Sea Ice duration","PSDCB","PSDNB")
@@ -1290,7 +1288,7 @@ text(mean(365.5),0.6,expression(bold("Sea ice duration (days.year"^"-1"*")")), c
 mtext("b",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
 # Plot displaying siberPSDx modes and credible intervals and PSDxc values for 
-# each sea ice concentration interval.
+# each sea ice duration interval.
 siberDensityPlot(PSDxIceDur,ylim=c(0,15),xticklabels = rep("",ncol(PSDxIceDur)),
                  xlab="",ylab="",xaxs="i",cex.axis=3.5,font=2, las=2,ax=F,ct="null")
 
@@ -1391,8 +1389,8 @@ nicheSIBER$group<-rep("AllSpecies",nrow(nicheSIBER))
 nicheSIBER<-nicheSIBER[,c(3,4,1,2)]
 siber.Test <- createSiberObject(nicheSIBER)
 
-# Computation of PSDxc and PSDyc for chlorophyll concentration interval with our 
-# custom function groupMetricsML2.
+# Computation of PSDxc and PSDyc for each chlorophyll concentration interval with 
+# our custom function groupMetricsML2.
 group.ML <- groupMetricsML2(siber.Test)
 print(group.ML)
 
@@ -1432,7 +1430,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipse in a matrix.
+# Comparison of PSDx for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -1469,7 +1467,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipse in a matrix.
+# Comparison of PSDy for each pair of ellipses in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
