@@ -1,6 +1,6 @@
 # This script focuses on the investigation of the impacts of the interactions 
-# between environmental impacts on the stable isotope values of sea stars in the 
-# Southern Ocean.
+# between environmental variables on the stable isotope values of sea stars in 
+# the Southern Ocean.
 
 ################################################################################
 # Packages
@@ -15,7 +15,7 @@ library(viridis) # Contains the "turbo" colour palette used for the plots.
 # Functions
 ################################################################################
 
-# We need to code some functions that will be used in the subsequent analysis.
+# We need to code some functions that will be used in the subsequent analyses.
 
 # The first one is inv.logit, to convert back logit-transformed values to their
 # original values. It is necessary to assess and show the influence of sea ice
@@ -134,7 +134,7 @@ filled.contour<-function (x = seq(0, 1, length.out = nrow(z)), y = seq(0, 1,
 # Data loading and preparation
 ################################################################################
 
-# Let's load and prepare the stable isotope and environmental data…
+# Let's load and prepare the stable isotope and environmental data.
 DataSeaStar<-read.table("IsotopeData.csv",dec=".",sep=",",header=T)
 DataEnv<-read.table("EnvironmentalData.csv",dec=".",sep=",",header=T)
 
@@ -142,8 +142,8 @@ DataEnv<-read.table("EnvironmentalData.csv",dec=".",sep=",",header=T)
 Data <- DataSeaStar %>% left_join(DataEnv, by = c("StationID","ExpeditionID","Date"))
 
 # We need to log-transform depth (log 10) and chlorophyll concentration (natural
-# log) data prior to doing the analysis. However, sea ice concentration will have 
-# to be logit transformed within the models.
+# log) data prior before doing the analysis. However, sea ice concentration will 
+# have to be logit transformed within the models.
 Data$logDepth<-log10(Data$Depth)
 Data$logChl<-log(Data$chl_prev_month)
 
@@ -151,15 +151,15 @@ Data$logChl<-log(Data$chl_prev_month)
 # For models with sea ice concentration and sea ice duration as explanatory 
 # variables, we need a dataframe where individuals from Subantarctic regions are
 # removed.  These individuals were collected in areas where sea ice has not been
-# present since more than 1000 days.
+# present since more than 1000 days or at all (value = 32765).
 DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 
 ################################################################################
-# Data analysis and plots
+# Data analyses and plots
 ################################################################################
 
 # The process of data analysis is the same for each combination of environmental
-# variable: we start by creating a linear model assessing the impact of the two 
+# variables: we start by creating a linear model assessing the impact of the two 
 # environmental variables and their interactions. We then predict the stable 
 # isotope values with the predicgrid function. We convert the result into a list 
 # with the function df2mat and then use the result to make the plot.
@@ -190,9 +190,9 @@ mpgrid_df <- predictgrid(mod, "logDepth", "seaice_prev_month", "d13C")
 ##### Converion of the results into a list.
 mpgrid_list <- df2mat(mpgrid_df)
 
-##### We checked the range of predicted stable isotope values for each model in 
-##### as we want to display the same range of predicted δ13C and δ15N values on
-##### all plots.
+##### We checked the range of predicted stable isotope values for each model as 
+##### we want to display the same range of predicted δ13C and δ15N values on all
+##### plots.
 range(mpgrid_list$d13C)
 
 ##### Plot creation.
