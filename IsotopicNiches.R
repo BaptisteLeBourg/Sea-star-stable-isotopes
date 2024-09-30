@@ -129,7 +129,7 @@ DataEnv<-read.table("EnvironmentalData.csv",dec=".",sep=",",header=T)
 Data <- DataSeaStar %>% left_join(DataEnv, by = c("StationID","ExpeditionID","Date"))
 
 # We need to log-transform depth (log 10) and chlorophyll concentration (natural
-# log) data prior to doing the analysis. We also need to logit-transform sea ice
+# log) data before doing the analysis. We also need to logit-transform sea ice
 # concentration.
 Data$logDepth<-log10(Data$Depth)
 Data$logChl<-log(Data$chl_prev_month)
