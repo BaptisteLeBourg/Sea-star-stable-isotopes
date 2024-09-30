@@ -23,7 +23,7 @@ DataEnv<-read.table("EnvironmentalData.csv",dec=".",sep=",",header=T)
 Data <- DataSeaStar %>% left_join(DataEnv, by = c("StationID","ExpeditionID","Date"))
 
 # We need to log-transform depth (log 10) and chlorophyll concentration (natural
-# log) data prior to doing the analysis. We also need to logit-transform sea ice
+# log) data before doing the analysis. We also need to logit-transform sea ice
 # concentration.
 Data$logDepth<-log10(Data$Depth)
 Data$logChl<-log(Data$chl_prev_month)
@@ -35,13 +35,13 @@ Data$Trophic_group<-as.factor(Data$Trophic_group)
 # For models with sea ice concentration and sea ice duration as explanatory 
 # variables, we need a dataframe where individuals from Subantarctic regions are
 # removed.  These individuals were collected in areas where sea ice has not been
-# present since more than 1000 days.
+# present since more than 1000 days or at all (value = 32765).
 DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 
 # For the models including trophic group, log-transformed depth, logit-transformed
-# sea ice concentration, sea ice season and log-transformed chlorophyll as explanatory
-# variables, it was necessary to create a dataset removing the data from the 
-# predators of encrusting prey as only four individuals were available for this 
+# sea ice concentration, sea ice season duration and log-transformed chlorophyll as
+# explanatory variables, it was necessary to create a dataset removing the data from 
+# the predators of encrusting prey as only four individuals were available for this 
 # trophic group in this model.
 DataAntChl<-DataAnt[!is.na(DataAnt$chl_prev_month),]
 which(DataAntChl$Trophic_group=="Pelagic-Carnivore2")
