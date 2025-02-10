@@ -1,5 +1,5 @@
 # This script focuses on the investigation of the isotopic niches of sea stars in 
-# the Southern Ocean, depending of the trophic groups and of the environmental 
+# the Southern ocean, depending of the trophic groups and of the environmental 
 # variables.
 
 ################################################################################
@@ -18,7 +18,7 @@ library(plotrix) # Contains the ablineclip function
 # Functions
 ################################################################################
 
-# The first function is groupMetricsML2. This function is a modification of the 
+# The first function is groupMetricsML. This function is a modification of the 
 # GroupMetricMl function in SIBER. It provides most of the standard ellipse metrics
 # (Standard Ellipse Area SEA and its corresponding small sample size corrected 
 # version SEAc, eccentricity, angle in radians), but also Pseudo-standard deviation 
@@ -129,7 +129,7 @@ DataEnv<-read.table("EnvironmentalData.csv",dec=".",sep=",",header=T)
 Data <- DataSeaStar %>% left_join(DataEnv, by = c("StationID","ExpeditionID","Date"))
 
 # We need to log-transform depth (log 10) and chlorophyll concentration (natural
-# log) data before doing the analysis. We also need to logit-transform sea ice
+# log) data prior to doing the analysis. We also need to logit-transform sea ice
 # concentration.
 Data$logDepth<-log10(Data$Depth)
 Data$logChl<-log(Data$chl_prev_month)
@@ -141,7 +141,7 @@ Data$Trophic_group<-as.factor(Data$Trophic_group)
 # For plots displaying relationship of stable isotope values with sea ice 
 # concentration and sea ice duration, we need a dataframe where individuals from
 # Subantarctic regions are removed. These individuals were collected in areas 
-# where sea ice has not been present since more than 1000 days or at all (value = 32765).
+# where sea ice has not been present since more than 1000 days.
 DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 
 ################################################################################
@@ -150,7 +150,7 @@ DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 # The ellipses will be generated at the scale of the whole Southern Ocean. Yet,
 # stable isotope values in sea stars may differ between sampling stations because
 # of spatial variations of stable isotope values of the primary food sources at 
-# the baseline of the food webs, or because of the potential influence of other 
+# the baseline of the food webs, or of the potential influence of other 
 # environmental parameters than the one of interest on stable isotope values. 
 # To avoid this issue, we mean-corrected stable isotope values for each station.
 
@@ -236,7 +236,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipses in a matrix.
+# Comparison of PSDx for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -273,7 +273,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipses in a matrix.
+# Comparison of PSDy for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -533,7 +533,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipses in a matrix.
+# Comparison of PSDx for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -570,7 +570,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipses in a matrix.
+# Comparison of PSDy for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -593,8 +593,8 @@ groupsPSDy
 # Summary of the results.
 
 # Preparation of data for the plots and a table summarising the results of PSDx 
-# and PSDy estimation. We need to reorder the depth intervals in the order we
-# want to see them on the table and the plots.
+# and PSDy estimation. We need to reorder the chlorophyll concentration 
+# intervals in the order we want to see them on the table and the plots.
 PSDxbathome<-PSDx.B
 QPSDxbathome<-PSDx.B.credibles
 modePSDxbathome<-as.data.frame(groupsPSDx)
@@ -723,15 +723,15 @@ title(ylab=expression(bold("PSD"["NB"]~"(‰)")), line=8, cex.lab=3.5)
 mtext("d",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
 # x-axis tick labels and names for plots c and d.
-labels=c("[0,100[",
-         "[100,200[",
-         "[200,500[",
-         "[500,1000[",
-         "[1000,1500[",
-         "[1500,2000[",
-         "[2000,3000[",
-         "[3000,4500[",
-         "[4500,+∞[")
+labels=c("[0,100)",
+         "[100,200)",
+         "[200,500)",
+         "[500,1000)",
+         "[1000,1500)",
+         "[1500,2000)",
+         "[2000,3000)",
+         "[3000,4500)",
+         "[4500,+∞)")
 par(mar=c(0,12,0.5,0.3))
 plot(c(0,nrow(modePSDxbathome)),c(0,1),xlab="",ylab="",
      ax=F,col="white",xaxs="i",xlim=c(1-0.5,nrow(modePSDxbathome)+0.5))
@@ -827,7 +827,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipses in a matrix.
+# Comparison of PSDx for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -864,7 +864,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipses in a matrix.
+# Comparison of PSDy for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -947,7 +947,7 @@ box(lwd=2)
 cor.test(DataAnt$logIce,DataAnt$d13C)
 legend("topright", c(expression(bold("r = 0.082, P < 0.001")),""),cex=2.75, bty="n",xjust=1) 
 
-##### Since we want to show the relationship between δ13C values and sea ice 
+##### Since we want to show the relationship between δ15N values and sea ice 
 ##### concentration with a scale of raw sea ice concentration values instead of 
 ##### logit-transformed ones, we need to predict the relationship between δ13C 
 ##### values and sea ice concentration.
@@ -978,7 +978,7 @@ legend("topright", c(expression(bold("r = 0.133, P < 0.001")),""),cex=2.75, bty=
 
 ##### Since we want to show the relationship between δ15N values and sea ice 
 ##### concentration with a scale of raw sea ice concentration values instead of 
-##### logit-transformed ones, we need to predict the relationship between δ15N 
+##### logit-transformed ones, we need to predict the relationship between δ13C 
 ##### values and sea ice concentration.
 test.glm <- lm(d15N ~ logit(seaice_prev_month),data=DataAnt)
 x_test <- seq(from=0,to=max(DataAnt$seaice_prev_month),length.out=1000)
@@ -1032,15 +1032,15 @@ mtext("d",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
 # x-axis tick labels and names for plots c and d.
 labels=c("Subantarctic",
-         "[0,10[",
-         "[10,20[",
-         "[20,30[",
-         "[30,40[",
-         "[40,50[",
-         "[50,60[",
-         "[60,70[",
-         "[70,80[",
-         "[80,90[",
+         "[0,10)",
+         "[10,20)",
+         "[20,30)",
+         "[30,40)",
+         "[40,50)",
+         "[50,60)",
+         "[60,70)",
+         "[70,80)",
+         "[80,90)",
          "[90,100]")
 par(mar=c(0,12,0.5,0.3))
 plot(c(0,nrow(modePSDxIceConc)),c(0,1),xlab="",ylab="",
@@ -1090,7 +1090,8 @@ meand15N<-aggregate(iso2~group+community, data=nicheSIBER, FUN="mean")
 nicheSIBER<-left_join(meand13C,meand15N)
 
 # We can now considered all taxa as a single species to ensure that the standard
-# ellipses will be generated at the scale of the sea ice duration intervals only.
+# ellipses will be generated at the scale of the sea ice concentration intervals
+# only.
 nicheSIBER$group<-rep("AllSpecies",nrow(nicheSIBER))
 
 # Re-ordering of the columns in the right order and creation of the SIBER object.
@@ -1138,7 +1139,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipses in a matrix.
+# Comparison of PSDx for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -1175,7 +1176,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipses in a matrix.
+# Comparison of PSDy for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -1216,6 +1217,7 @@ modePSDyIceDur<-modePSDyIceDur[c(13,1,10,2:9,11,12),]
 
 groupMLIceDur<-group.ML[,c(13,1:12)]
 
+####### Table and figure ######
 # Creation of a table summarising the results of PSDx and PSDy estimation.
 tableIceDur<-data.frame(matrix(nrow=nrow(modePSDyIceDur), ncol=3))
 colnames(tableIceDur)<-c("Sea Ice duration","PSDCB","PSDNB")
@@ -1262,7 +1264,7 @@ legend("topright", c(expression(bold("r = -0.248, P < 0.001")),""),cex=2.75, bty
 ablineclip(lm(data$d13C~data$seaice_last_730),lwd=1.5,col="black",x1=min(DataAnt$seaice_last_730),x2=730)
 
 title(ylab=expression(bold("δ"^"13"*"C (‰)")), line=8, cex.lab=3.5)
-title(xlab=expression(bold("Sea ice duration (days.year"^"-1"*")")), line=8, cex.lab=3.5)
+title(xlab=expression(bold("Sea ice duration (days)")), line=8, cex.lab=3.5)
 
 mtext("a",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
@@ -1283,12 +1285,12 @@ legend("topright", c(expression(bold("r = 0.344, P < 0.001")),""),cex=2.75, bty=
 ablineclip(lm(data$d15N~data$seaice_last_730),lwd=2,col="black",x1=min(DataAnt$seaice_last_730),x2=730)
 
 title(ylab=expression(bold("δ"^"15"*"N (‰)")), line=8, cex.lab=3.5)
-text(mean(365.5),0.6,expression(bold("Sea ice duration (days.year"^"-1"*")")), cex=3.5,xpd=NA,adj=0.5)
+text(mean(365.5),0.6,expression(bold("Sea ice duration (days)")), cex=3.5,xpd=NA,adj=0.5)
 
 mtext("b",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
 # Plot displaying siberPSDx modes and credible intervals and PSDxc values for 
-# each sea ice duration interval.
+# each sea ice concentration interval.
 siberDensityPlot(PSDxIceDur,ylim=c(0,15),xticklabels = rep("",ncol(PSDxIceDur)),
                  xlab="",ylab="",xaxs="i",cex.axis=3.5,font=2, las=2,ax=F,ct="null")
 
@@ -1351,7 +1353,7 @@ text(x = 1:nrow(modePSDxIceDur),
      srt = 60,
      font=2,
      cex = 3.5,adj=1) 
-text(x=nrow(modePSDxIceDur)/2+0.5,0,xpd=NA,expression(bold("Sea ice duration (days.year"^"-1"*")")),adj=c(0.5,0),font=2,cex = 3.5)
+text(x=nrow(modePSDxIceDur)/2+0.5,0,xpd=NA,expression(bold("Sea ice duration (days)")),adj=c(0.5,0),font=2,cex = 3.5)
 
 ################################################################################
 # Isotopic niches for chlorophyll concentration intervals
@@ -1389,8 +1391,8 @@ nicheSIBER$group<-rep("AllSpecies",nrow(nicheSIBER))
 nicheSIBER<-nicheSIBER[,c(3,4,1,2)]
 siber.Test <- createSiberObject(nicheSIBER)
 
-# Computation of PSDxc and PSDyc for each chlorophyll concentration interval with 
-# our custom function groupMetricsML2.
+# Computation of PSDxc and PSDyc for chlorophyll concentration interval with our 
+# custom function groupMetricsML2.
 group.ML <- groupMetricsML2(siber.Test)
 print(group.ML)
 
@@ -1430,7 +1432,7 @@ PSDx.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDx for each pair of ellipses in a matrix.
+# Comparison of PSDx for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDx.B), nrow = ncol(PSDx.B))
 for (i in 1:(ncol(PSDx.B) - 1)) {
   for (j in (i + 1):ncol(PSDx.B)) {
@@ -1467,7 +1469,7 @@ PSDy.B.modes <- lapply(
   function(x,...){tmp<-hdrcde::hdr(x)$mode},
   prob = 0.95, all.modes=T)
 
-# Comparison of PSDy for each pair of ellipses in a matrix.
+# Comparison of PSDy for each pair of ellipse in a matrix.
 Q <- matrix(1, ncol = ncol(PSDy.B), nrow = ncol(PSDy.B))
 for (i in 1:(ncol(PSDy.B) - 1)) {
   for (j in (i + 1):ncol(PSDy.B)) {
@@ -1622,9 +1624,9 @@ title(ylab=expression(bold("PSD"["NB"]~"(‰)")), line=8, cex.lab=3.5)
 mtext("d",side=3,adj=0.01,line=-3,font=2,cex=2.75)
 
 # x-axis tick labels and names for plots c and d.
-labels=c("[0.01,0.10[",
-         "[0.10,1.00[",
-         "[1.00,+∞[")
+labels=c("[0.01,0.10)",
+         "[0.10,1.00)",
+         "[1.00,+∞)")
 par(mar=c(0,12,0.5,0.3))
 plot(c(0,nrow(modePSDxChlConc)),c(0,1),xlab="",ylab="",
      ax=F,col="white",xaxs="i",xlim=c(1-0.5,nrow(modePSDxChlConc)+0.5))
