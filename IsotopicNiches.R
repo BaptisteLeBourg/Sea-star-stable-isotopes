@@ -85,7 +85,7 @@ siberPSDx <- function (corrected.posteriors) {
   return(cosTHETA.B)
 }
 
-# The fourth function is posteriorPSDy. it is a modification of the posteriorSEA 
+# The fourth function is posteriorPSDy. It is a modification of the posteriorSEA 
 # function in SIBER. This function loops over each posterior draw of a single 
 # group's Bayesian bivariate ellipse and calculates the Pseudo-standard deviation
 # on the y axis (PSDy) for each draw, thereby generating a distribution of PSDx 
