@@ -168,7 +168,7 @@ DataAnt <- Data[-which(Data$days_since_melt > 1000),]
 # logit-transform sea ice concentration values in the models and convert them 
 # back to raw values before doing the prediction.
 
-# The plots were saved as tiff to be put togeether in open office later. Axis 
+# The plots were saved as tiff to be put together in open office later. Axis 
 # tick labels were also added manually with open office. Consequenly, no tick 
 # labels were included on the plots.
 
